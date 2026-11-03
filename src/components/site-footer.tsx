@@ -9,7 +9,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-[#080908] px-5 pb-5 pt-20 text-white sm:px-10 lg:px-20 lg:pt-28">
       <div className="mx-auto max-w-[1250px]">
-        <Image alt="Wanderlast" height={80} src="/images/Wanderlast-1.png" width={542} />
+        <Image alt="Wanderlast" className="h-auto w-full max-w-[542px]" height={80} src="/images/Wanderlast-1.png" width={542} />
         <p className="mt-3 text-lg text-white/65">
           Your gateway to extraordinary travel experiences around the world.
         </p>

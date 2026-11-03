@@ -33,7 +33,7 @@ export function WhyChoose() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {features.map((feature) => (
-            <article className="min-h-69 bg-white px-11 py-12 shadow-[0_2px_1px_rgb(0_0_0_/_0.04)]" key={feature.title}>
+            <article className="min-h-69 bg-white px-7 py-10 shadow-[0_2px_1px_rgb(0_0_0_/_0.04)] sm:px-11 sm:py-12" key={feature.title}>
               <Image alt="" aria-hidden="true" height={45} src={feature.icon} width={45} />
               <h3 className="mt-7 text-3xl tracking-[-0.045em] text-black">{feature.title}</h3>
               <p className="mt-4 max-w-sm text-[17px] leading-7 text-zinc-500">{feature.description}</p>

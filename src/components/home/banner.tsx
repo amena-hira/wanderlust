@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react"
 
 export function Banner() {
   return (
-    <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden px-5 pt-24 text-center text-white">
+    <section className="relative isolate flex min-h-screen flex-col items-center justify-center gap-12 overflow-hidden px-5 pt-28 pb-12 text-center text-white lg:pb-32">
       <Image
         alt="A turquoise cove surrounded by a green coastal village"
         className="-z-20 object-cover"
@@ -42,8 +42,8 @@ export function Banner() {
         </div>
       </div>
 
-      <form className="absolute inset-x-0 bottom-0 grid bg-slate-700/60 text-left backdrop-blur-[2px] sm:grid-cols-[1.05fr_1.05fr_1.05fr_1.05fr_0.7fr]">
-        <label className="border-b border-white/35 px-7 py-4 sm:border-r sm:border-b-0">
+      <form className="relative grid w-full max-w-3xl grid-cols-1 bg-slate-700/60 text-left backdrop-blur-[2px] sm:max-w-none sm:grid-cols-2 lg:absolute lg:inset-x-0 lg:bottom-0 lg:grid-cols-[1.05fr_1.05fr_1.05fr_1.05fr_0.7fr]">
+        <label className="border-b border-white/35 px-5 py-4 lg:border-r lg:border-b-0 lg:px-7">
           <span className="block text-xl font-medium">Location</span>
           <input
             aria-label="Location"
@@ -52,7 +52,7 @@ export function Banner() {
             placeholder="Address, City Or Zip"
           />
         </label>
-        <label className="border-b border-white/35 px-7 py-4 sm:border-r sm:border-b-0">
+        <label className="border-b border-white/35 px-5 py-4 lg:border-r lg:border-b-0 lg:px-7">
           <span className="block text-xl font-medium">Date/Duration</span>
           <input
             aria-label="Date and duration"
@@ -61,7 +61,7 @@ export function Banner() {
             placeholder="Anytime/3 Days"
           />
         </label>
-        <label className="border-b border-white/35 px-7 py-4 sm:border-r sm:border-b-0">
+        <label className="border-b border-white/35 px-5 py-4 lg:border-r lg:border-b-0 lg:px-7">
           <span className="block text-xl font-medium">Budget</span>
           <input
             aria-label="Budget"
@@ -70,7 +70,7 @@ export function Banner() {
             placeholder="$0-$3000"
           />
         </label>
-        <label className="border-b border-white/35 px-7 py-4 sm:border-r sm:border-b-0">
+        <label className="border-b border-white/35 px-5 py-4 lg:border-r lg:border-b-0 lg:px-7">
           <span className="block text-xl font-medium">People</span>
           <input
             aria-label="Number of people"
@@ -80,7 +80,7 @@ export function Banner() {
           />
         </label>
         <button
-          className="min-h-20 bg-cyan-600 px-7 text-xl font-semibold transition-colors hover:bg-cyan-500 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
+          className="min-h-20 bg-cyan-600 px-5 text-xl font-semibold transition-colors hover:bg-cyan-500 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white sm:col-span-2 lg:col-span-1 lg:px-7"
           type="button"
         >
           Search

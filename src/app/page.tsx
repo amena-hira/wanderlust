@@ -1,7 +1,7 @@
-import { Banner } from "@/components/banner"
-import { JourneyCta } from "@/components/journey-cta"
-import { Testimonials } from "@/components/testimonials"
-import { WhyChoose } from "@/components/why-choose"
+import { Banner } from "@/components/home/banner"
+import { JourneyCta } from "@/components/home/journey-cta"
+import { Testimonials } from "@/components/home/testimonials"
+import { WhyChoose } from "@/components/home/why-choose"
 
 export default function Home() {
   return (
