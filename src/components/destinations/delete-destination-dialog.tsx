@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 export function DeleteDestinationDialog({
   destination,
@@ -43,9 +44,15 @@ export function DeleteDestinationDialog({
     setError(null);
 
     try {
+      const token = await getTokenFromClient();
       const response = await fetch(
         `http://localhost:8000/destinations/${destinationId}`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        }
       );
       const data = await response.json().catch(() => null);
 

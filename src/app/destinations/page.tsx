@@ -3,7 +3,6 @@ import { DestinationList, type Destination } from "@/components/destinations/des
 const DestinationsPage = async () => {
   const res = await fetch("http://localhost:8000/destinations");
   const data: Destination[] = await res.json();
-  console.log(data);
 
   return (
     <main className="min-h-screen bg-white px-5 pt-10 pb-24 sm:px-10 sm:pt-14 lg:px-20">

@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const categories = ["Beach", "Mountain", "City", "Adventure", "Cultural"];
 
@@ -76,11 +77,15 @@ export function EditDestinationDialog({
     setError(null);
 
     try {
+      const token = await getTokenFromClient();
       const response = await fetch(
         `http://localhost:8000/destinations/${destinationId}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
           body: JSON.stringify(form),
         }
       );

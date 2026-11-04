@@ -1,10 +1,26 @@
 "use client"
 
+import { redirect } from "next/navigation"
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Menu, UserRound, X } from "lucide-react"
 import { usePathname } from "next/navigation"
+import { authClient } from "@/lib/auth-client"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const navLinks = [
   { href: "/", label: "Home", active: "/" },
@@ -19,15 +35,22 @@ export function Navbar() {
   const isHomePage = pathname === "/"
 
   const linkClass = (active: string) =>
-    `transition-colors hover:text-cyan-600 ${
-      pathname === active ? "text-cyan-600 underline underline-offset-4" : ""
+    `transition-colors hover:text-cyan-600 ${pathname === active ? "text-cyan-600 underline underline-offset-4" : ""
     }`
+
+  const { data: session } = authClient.useSession()
+
+  const user = session?.user
+
+  const handleSignOut = () => {
+    authClient.signOut()
+    redirect("/signin")
+  }
 
   return (
     <header
-      className={`${
-        isHomePage ? "absolute inset-x-0 top-0" : "relative"
-      } z-10 p-3 sm:p-6`}
+      className={`${isHomePage ? "absolute inset-x-0 top-0" : "relative"
+        } z-10 p-3 sm:p-6`}
     >
       <nav
         aria-label="Main navigation"
@@ -63,12 +86,42 @@ export function Navbar() {
         </Link>
 
         <div className="flex min-w-0 items-center justify-end gap-4 sm:gap-6 xl:gap-9">
-          <Link className="hidden items-center gap-1.5 hover:text-cyan-600 lg:flex" href="/profile">
-            <UserRound aria-hidden="true" size={18} strokeWidth={2.5} />
-            Profile
-          </Link>
-          <Link className="hidden hover:text-cyan-600 lg:block" href="/login">Login</Link>
-          <Link className="hidden hover:text-cyan-600 lg:block" href="/sign-up">Sign Up</Link>
+
+          {
+            user ?
+              <>
+                <Link className="hidden items-center gap-1.5 hover:text-cyan-600 lg:flex" href="/profile">
+                  <UserRound aria-hidden="true" size={18} strokeWidth={2.5} />
+                  Profile
+                </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="rounded-full"><Avatar>
+                    <AvatarImage src={user?.image || ""} alt="shadcn" />
+                    <AvatarFallback>{user?.name ? user.name.charAt(0) : "User"}</AvatarFallback>
+                  </Avatar></Button>} />
+                  <DropdownMenuContent className="w-32">
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem>{user?.name || "User"}</DropdownMenuItem>
+                      <DropdownMenuItem>{user?.email || "user@example.com"}</DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem variant="destructive" onClick={handleSignOut}>
+                        Sign out
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+
+              :
+              <>
+                <Link className="hidden hover:text-cyan-600 lg:block" href="/signin">Sign In</Link>
+                <Link className="hidden hover:text-cyan-600 lg:block" href="/signup">Sign Up</Link>
+              </>
+          }
+
+
 
           <button
             aria-controls="mobile-menu"
@@ -103,28 +156,38 @@ export function Navbar() {
             ))}
 
             <div className="flex items-center gap-6 pt-4 pb-2">
-              <Link
-                className="hover:text-cyan-600"
-                href="/login"
-                onClick={() => setMenuOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                className="hover:text-cyan-600"
-                href="/sign-up"
-                onClick={() => setMenuOpen(false)}
-              >
-                Sign Up
-              </Link>
-              <Link
-                className="ml-auto inline-flex items-center gap-1.5 hover:text-cyan-600"
-                href="/profile"
-                onClick={() => setMenuOpen(false)}
-              >
-                <UserRound aria-hidden="true" size={18} strokeWidth={2.5} />
-                Profile
-              </Link>
+              {
+                user ?
+
+                  <Link
+                    className="mr-auto lg:ml-auto inline-flex items-center gap-1.5 hover:text-cyan-600"
+                    href="/profile"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <UserRound aria-hidden="true" size={18} strokeWidth={2.5} />
+                    Profile
+                  </Link>
+
+                  :
+                  <>
+                    <Link
+                      className="hover:text-cyan-600"
+                      href="/signin"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      className="hover:text-cyan-600"
+                      href="/signup"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+              }
+
+
             </div>
           </div>
         </div>

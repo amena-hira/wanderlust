@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const API_URL = "http://localhost:8000/add-destination";
 
@@ -53,26 +54,28 @@ export default function AddDestinationPage() {
     console.log(form)
 
     try {
+      const token = await getTokenFromClient();
       const res = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(form),
       });
 
-      const data = await res.json().catch(() => null);
+      const resData = await res.json().catch(() => null);
 
       if (!res.ok) {
         throw new Error(
-          data?.message ?? `Request failed with status ${res.status}`
+          resData?.message ?? `Request failed with status ${res.status}`
         );
       }
 
-      console.log(data);
+      console.log(resData);
       setStatus({
         type: "success",
-        message: data?.message ?? "Travel package added successfully.",
+        message: resData?.message ?? "Travel package added successfully.",
       });
       setForm(initialForm);
     } catch (error) {
